@@ -17,8 +17,9 @@ cd "%~dp0"
 rem Remove the output folder for a fresh compile.
 rd /s /q Output
 
-set VisualStudioInstallerFolder="%ProgramFiles(x86)%\Microsoft Visual Studio\Installer"
-if %PROCESSOR_ARCHITECTURE%==x86 set VisualStudioInstallerFolder="%ProgramFiles%\Microsoft Visual Studio\Installer"
+:: set VisualStudioInstallerFolder="%ProgramFiles(x86)%\Microsoft Visual Studio\Installer"
+:: if %PROCESSOR_ARCHITECTURE%==x86 set VisualStudioInstallerFolder="%ProgramFiles%\Microsoft Visual Studio\Installer"
+set VisualStudioInstallerFolder="%ProgramFiles%\Microsoft Visual Studio\Installer"
 
 pushd %VisualStudioInstallerFolder%
 for /f "usebackq tokens=*" %%i in (`vswhere -latest -products * -requires Microsoft.NetCore.Component.SDK -property installationPath`) do (
@@ -26,7 +27,7 @@ for /f "usebackq tokens=*" %%i in (`vswhere -latest -products * -requires Micros
 )
 popd
 
-call "%VisualStudioInstallDir%\VC\Auxiliary\Build\vcvarsall.bat" x86
+call "%VisualStudioInstallDir%\VC\Auxiliary\Build\vcvarsall.bat" x64
 
 rem Build all targets
 MSBuild -m BuildAllTargets.proj
